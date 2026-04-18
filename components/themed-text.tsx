@@ -1,11 +1,21 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
 
+import { Fonts, Typography } from '@/constants/theme';
 import { useThemeColor } from '@/hooks/use-theme-color';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+  type?:
+    | 'default'
+    | 'title'
+    | 'defaultSemiBold'
+    | 'subtitle'
+    | 'link'
+    | 'caption'
+    | 'captionStrong'
+    | 'button'
+    | 'buttonTall';
 };
 
 export function ThemedText({
@@ -15,7 +25,7 @@ export function ThemedText({
   type = 'default',
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, type === 'link' ? 'tint' : 'text');
 
   return (
     <Text
@@ -26,6 +36,10 @@ export function ThemedText({
         type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
         type === 'subtitle' ? styles.subtitle : undefined,
         type === 'link' ? styles.link : undefined,
+        type === 'caption' ? styles.caption : undefined,
+        type === 'captionStrong' ? styles.captionStrong : undefined,
+        type === 'button' ? styles.button : undefined,
+        type === 'buttonTall' ? styles.buttonTall : undefined,
         style,
       ]}
       {...rest}
@@ -34,27 +48,19 @@ export function ThemedText({
 }
 
 const styles = StyleSheet.create({
-  default: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '600',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    lineHeight: 32,
-  },
-  subtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
+  default: Typography.body,
+  defaultSemiBold: Typography.button,
+  title: Typography.display,
+  subtitle: Typography.heading,
   link: {
-    lineHeight: 30,
-    fontSize: 16,
-    color: '#0a7ea4',
+    ...Typography.body,
+    textDecorationLine: 'underline',
+  },
+  caption: Typography.caption,
+  captionStrong: Typography.captionStrong,
+  button: Typography.button,
+  buttonTall: Typography.buttonTall,
+  mono: {
+    fontFamily: Fonts.mono,
   },
 });

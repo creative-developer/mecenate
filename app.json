@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "Mecenate",
+    "slug": "mecenate",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "mecenate",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
