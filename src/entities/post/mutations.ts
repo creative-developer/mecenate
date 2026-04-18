@@ -1,31 +1,20 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
-import { postsApi } from './api';
+import { queryClient } from '@shared/api/query-client';
+
+import { togglePostLike } from './api';
 import { postQueryKeys } from './consts';
 import { TogglePostLikeDto } from './dto';
-import { mapLikeModel } from './mapper';
 
-export function useTogglePostLikeMutation() {
-  const queryClient = useQueryClient();
-
+export const useTogglePostLikeMutation = () => {
   return useMutation({
-    mutationFn: async (params: TogglePostLikeDto) => {
-      const response = await postsApi.togglePostLike(params);
-
-      return mapLikeModel(response);
+    mutationKey: [postQueryKeys.togglePostLike],
+    mutationFn: (data: TogglePostLikeDto) => {
+      return togglePostLike(data);
     },
-    onSuccess: async (_data, variables) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: postQueryKeys.listRoot,
-        }),
-        queryClient.invalidateQueries({
-          queryKey: postQueryKeys.infiniteListRoot,
-        }),
-        queryClient.invalidateQueries({
-          queryKey: postQueryKeys.detail(variables.id),
-        }),
-      ]);
+    onSuccess: (_, form) => {
+      queryClient.invalidateQueries({ queryKey: [postQueryKeys.postsFeed] });
+      queryClient.invalidateQueries({ queryKey: [postQueryKeys.postById, form.postId] });
     },
   });
-}
+};

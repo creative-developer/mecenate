@@ -2,8 +2,8 @@ export type CommentAuthorModel = {
   id: string;
   username: string;
   displayName: string;
-  avatarUrl: string;
-  bio: string;
+  avatarUrl: string | null;
+  bio: string | null;
   subscribersCount: number;
   isVerified: boolean;
 };
@@ -11,9 +11,9 @@ export type CommentAuthorModel = {
 export type CommentModel = {
   id: string;
   postId: string;
-  author: CommentAuthorModel;
+  author: CommentAuthorModel | null;
   text: string;
-  createdAt: string;
+  createdAt: string | null;
 };
 
 export type CommentsListModel = {
@@ -23,5 +23,5 @@ export type CommentsListModel = {
 };
 
 export type CommentCreatedModel = {
-  comment: CommentModel;
+  comment: CommentModel | null;
 };

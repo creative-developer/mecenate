@@ -1,28 +1,19 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
-import { commentsApi } from './api';
+import { queryClient } from '@shared/api/query-client';
+
+import { addComment } from './api';
 import { commentQueryKeys } from './consts';
 import { AddCommentDto } from './dto';
-import { mapCommentCreatedModel } from './mapper';
 
-export function useAddCommentMutation() {
-  const queryClient = useQueryClient();
-
+export const useAddCommentMutation = () => {
   return useMutation({
-    mutationFn: async (params: AddCommentDto) => {
-      const response = await commentsApi.addComment(params);
-
-      return mapCommentCreatedModel(response);
+    mutationKey: [commentQueryKeys.addComment],
+    mutationFn: (data: AddCommentDto) => {
+      return addComment(data);
     },
-    onSuccess: async (_data, variables) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: commentQueryKeys.listRoot(variables.id),
-        }),
-        queryClient.invalidateQueries({
-          queryKey: commentQueryKeys.infiniteListRoot(variables.id),
-        }),
-      ]);
+    onSuccess: (_, form) => {
+      queryClient.invalidateQueries({ queryKey: [commentQueryKeys.commentsList, form.postId] });
     },
   });
-}
+};

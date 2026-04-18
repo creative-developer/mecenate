@@ -1,52 +1,40 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-import { commentsApi } from './api';
+import { getComments } from './api';
 import { commentQueryKeys } from './consts';
-import { GetCommentsInfiniteQueryDto, GetCommentsQueryDto } from './dto';
-import { mapCommentsListModel } from './mapper';
+import { GetCommentsDto } from './dto';
 
-const normalizeCommentsQuery = (params: GetCommentsQueryDto): GetCommentsQueryDto => ({
-  id: params.id,
+const normalizeCommentsQuery = (params: GetCommentsDto): GetCommentsDto => ({
+  postId: params.postId,
   limit: params.limit ?? 20,
   cursor: params.cursor,
 });
 
-const normalizeInfiniteCommentsQuery = (
-  params: GetCommentsInfiniteQueryDto,
-): GetCommentsInfiniteQueryDto => ({
-  id: params.id,
-  limit: params.limit ?? 20,
-});
-
-export function usePostCommentsQuery(params: GetCommentsQueryDto) {
+export const useGetCommentsQuery = (params: GetCommentsDto) => {
   const normalized = normalizeCommentsQuery(params);
 
   return useQuery({
-    queryKey: commentQueryKeys.list(normalized),
-    queryFn: async () => {
-      const response = await commentsApi.getComments(normalized);
-
-      return mapCommentsListModel(response);
+    queryKey: [commentQueryKeys.commentsList, normalized.postId, normalized],
+    queryFn: () => {
+      return getComments(normalized);
     },
-    enabled: Boolean(normalized.id),
+    enabled: Boolean(normalized.postId),
   });
-}
+};
 
-export function useInfinitePostCommentsQuery(params: GetCommentsInfiniteQueryDto) {
-  const normalized = normalizeInfiniteCommentsQuery(params);
+export const useGetCommentsInfiniteQuery = (params: GetCommentsDto) => {
+  const normalized = normalizeCommentsQuery({ ...params, cursor: undefined });
 
   return useInfiniteQuery({
-    queryKey: commentQueryKeys.infiniteList(normalized),
+    queryKey: [commentQueryKeys.commentsList, normalized.postId, 'infinite', normalized],
     initialPageParam: undefined as string | undefined,
-    queryFn: async ({ pageParam }) => {
-      const response = await commentsApi.getComments({
+    queryFn: ({ pageParam }) => {
+      return getComments({
         ...normalized,
         cursor: pageParam,
       });
-
-      return mapCommentsListModel(response);
     },
-    enabled: Boolean(normalized.id),
+    enabled: Boolean(normalized.postId),
     getNextPageParam: lastPage => (lastPage.hasMore ? (lastPage.nextCursor ?? undefined) : undefined),
   });
-}
+};

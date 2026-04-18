@@ -1,64 +1,49 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-import { postsApi } from './api';
+import { getPostById, getPosts } from './api';
 import { postQueryKeys } from './consts';
-import { GetPostsInfiniteQueryDto, GetPostsQueryDto } from './dto';
-import { mapPostDetailModel, mapPostsFeedModel } from './mapper';
+import { GetPostsDto } from './dto';
 
-const normalizePostsQuery = (params: GetPostsQueryDto = {}): GetPostsQueryDto => ({
+const normalizePostsQuery = (params: GetPostsDto = {}): GetPostsDto => ({
   limit: params.limit ?? 10,
   cursor: params.cursor,
   tier: params.tier,
   simulate_error: params.simulate_error,
 });
 
-const normalizeInfinitePostsQuery = (
-  params: GetPostsInfiniteQueryDto = {},
-): GetPostsInfiniteQueryDto => ({
-  limit: params.limit ?? 10,
-  tier: params.tier,
-  simulate_error: params.simulate_error,
-});
-
-export function usePostsFeedQuery(params: GetPostsQueryDto = {}) {
+export const useGetPostsFeedQuery = (params: GetPostsDto = {}) => {
   const normalized = normalizePostsQuery(params);
 
   return useQuery({
-    queryKey: postQueryKeys.list(normalized),
-    queryFn: async () => {
-      const response = await postsApi.getPosts(normalized);
-
-      return mapPostsFeedModel(response);
+    queryKey: [postQueryKeys.postsFeed, normalized],
+    queryFn: () => {
+      return getPosts(normalized);
     },
   });
-}
+};
 
-export function useInfinitePostsFeedQuery(params: GetPostsInfiniteQueryDto = {}) {
-  const normalized = normalizeInfinitePostsQuery(params);
+export const useGetPostsFeedInfiniteQuery = (params: GetPostsDto = {}) => {
+  const normalized = normalizePostsQuery({ ...params, cursor: undefined });
 
   return useInfiniteQuery({
-    queryKey: postQueryKeys.infiniteList(normalized),
+    queryKey: [postQueryKeys.postsFeed, 'infinite', normalized],
     initialPageParam: undefined as string | undefined,
-    queryFn: async ({ pageParam }) => {
-      const response = await postsApi.getPosts({
+    queryFn: ({ pageParam }) => {
+      return getPosts({
         ...normalized,
         cursor: pageParam,
       });
-
-      return mapPostsFeedModel(response);
     },
     getNextPageParam: lastPage => (lastPage.hasMore ? (lastPage.nextCursor ?? undefined) : undefined),
   });
-}
+};
 
-export function usePostByIdQuery(postId?: string | null) {
+export const useGetPostByIdQuery = ({ postId, isEnabled }: { postId: string; isEnabled: boolean }) => {
   return useQuery({
-    queryKey: postQueryKeys.detail(postId ?? ''),
-    queryFn: async () => {
-      const response = await postsApi.getPostById({ id: postId ?? '' });
-
-      return mapPostDetailModel(response);
+    queryKey: [postQueryKeys.postById, postId],
+    queryFn: () => {
+      return getPostById(postId);
     },
-    enabled: Boolean(postId),
+    enabled: isEnabled,
   });
-}
+};

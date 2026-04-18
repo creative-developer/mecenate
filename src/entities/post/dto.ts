@@ -1,63 +1,12 @@
-import { ApiSuccessResponse } from '@shared/api';
+import { PostTier } from './types';
 
-export type PostTierDto = 'free' | 'paid';
-
-export type AuthorDto = {
-  id: string;
-  username: string;
-  displayName: string;
-  avatarUrl: string;
-  bio: string;
-  subscribersCount: number;
-  isVerified: boolean;
-};
-
-export type PostDto = {
-  id: string;
-  author: AuthorDto;
-  title: string;
-  body: string;
-  preview: string;
-  coverUrl: string;
-  likesCount: number;
-  commentsCount: number;
-  isLiked: boolean;
-  tier: PostTierDto;
-  createdAt: string;
-};
-
-export type GetPostsQueryDto = {
+export type GetPostsDto = {
   limit?: number;
   cursor?: string;
-  tier?: PostTierDto;
+  tier?: PostTier;
   simulate_error?: boolean;
-};
-
-export type GetPostsInfiniteQueryDto = {
-  limit?: number;
-  tier?: PostTierDto;
-  simulate_error?: boolean;
-};
-
-export type GetPostByIdDto = {
-  id: string;
 };
 
 export type TogglePostLikeDto = {
-  id: string;
+  postId: string;
 };
-
-export type PostsResponseDto = ApiSuccessResponse<{
-  posts: PostDto[];
-  nextCursor: string | null;
-  hasMore: boolean;
-}>;
-
-export type PostDetailResponseDto = ApiSuccessResponse<{
-  post: PostDto;
-}>;
-
-export type LikeResponseDto = ApiSuccessResponse<{
-  isLiked: boolean;
-  likesCount: number;
-}>;

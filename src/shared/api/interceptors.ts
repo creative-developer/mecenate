@@ -1,4 +1,4 @@
-import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
 import { ApiClientError, ApiErrorResponse } from './types';
 
@@ -10,15 +10,9 @@ export const setApiAuthTokenGetter = (getter: AuthTokenGetter) => {
   authTokenGetter = getter;
 };
 
-const withAuthHeader = (config: InternalAxiosRequestConfig) => {
-  const token = authTokenGetter();
+export const resolveApiAuthToken = () => authTokenGetter();
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
-  return config;
-};
+export const onResponse = <TResponse>(response: AxiosResponse<TResponse>) => response;
 
 const mapAxiosError = (error: AxiosError<ApiErrorResponse>) => {
   const status = error.response?.status;
@@ -40,12 +34,10 @@ const mapAxiosError = (error: AxiosError<ApiErrorResponse>) => {
   });
 };
 
+export const onResponseError = (error: AxiosError<ApiErrorResponse>) => Promise.reject(mapAxiosError(error));
+
 export const registerApiInterceptors = (instance: AxiosInstance) => {
-  instance.interceptors.request.use(withAuthHeader);
-  instance.interceptors.response.use(
-    response => response,
-    (error: AxiosError<ApiErrorResponse>) => Promise.reject(mapAxiosError(error)),
-  );
+  instance.interceptors.response.use(onResponse, onResponseError);
 
   return instance;
 };

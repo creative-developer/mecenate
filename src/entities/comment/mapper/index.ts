@@ -1,4 +1,4 @@
-export * from './mapCommentAuthorModel';
-export * from './mapCommentCreatedModel';
-export * from './mapCommentModel';
-export * from './mapCommentsListModel';
+export { mapComment } from './mapComment';
+export { mapCommentAuthor } from './mapCommentAuthor';
+export { mapCommentCreated } from './mapCommentCreated';
+export { mapCommentsList } from './mapCommentsList';

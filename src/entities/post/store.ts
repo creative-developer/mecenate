@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
-import { GetPostsQueryDto } from './dto';
+import { GetPostsDto } from './dto';
 import { PostTier } from './types';
 
 type PostsFeedFilters = {
@@ -41,7 +41,7 @@ class PostsStore {
     };
   }
 
-  get feedQueryParams(): GetPostsQueryDto {
+  get feedQueryParams(): GetPostsDto {
     return {
       limit: this.feedFilters.limit,
       tier: this.feedFilters.tier,

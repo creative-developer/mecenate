@@ -4,24 +4,24 @@ export type AuthorModel = {
   id: string;
   username: string;
   displayName: string;
-  avatarUrl: string;
-  bio: string;
+  avatarUrl: string | null;
+  bio: string | null;
   subscribersCount: number;
   isVerified: boolean;
 };
 
 export type PostModel = {
   id: string;
-  author: AuthorModel;
+  author: AuthorModel | null;
   title: string;
   body: string;
   preview: string;
-  coverUrl: string;
+  coverUrl: string | null;
   likesCount: number;
   commentsCount: number;
   isLiked: boolean;
   tier: PostTier;
-  createdAt: string;
+  createdAt: string | null;
 };
 
 export type PostsFeedModel = {
@@ -31,7 +31,7 @@ export type PostsFeedModel = {
 };
 
 export type PostDetailModel = {
-  post: PostModel;
+  post: PostModel | null;
 };
 
 export type PostLikeModel = {

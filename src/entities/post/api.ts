@@ -1,32 +1,22 @@
-import { apiClient } from '@shared/api';
+import { get, post } from '@shared/api/axios';
 
-import {
-  GetPostByIdDto,
-  GetPostsQueryDto,
-  LikeResponseDto,
-  PostDetailResponseDto,
-  PostsResponseDto,
-  TogglePostLikeDto,
-} from './dto';
+import { postApiKeys } from './consts';
+import { GetPostsDto, TogglePostLikeDto } from './dto';
+import { mapPostDetail, mapPostLike, mapPostsFeed } from './mapper';
+import { PostDetailResponse, PostLikeResponse, PostsFeedResponse } from './mapper/types';
 
-export const postsApi = {
-  async getPosts(params: GetPostsQueryDto = {}) {
-    const response = await apiClient.get<PostsResponseDto>('/posts', {
-      params,
-    });
+export const getPosts = (params: GetPostsDto = {}) =>
+  get<PostsFeedResponse>(postApiKeys.getPosts, {
+    params: {
+      limit: params.limit,
+      cursor: params.cursor,
+      tier: params.tier,
+      simulate_error: params.simulate_error,
+    },
+  }).then(response => mapPostsFeed(response.data));
 
-    return response.data;
-  },
+export const getPostById = (postId: string) =>
+  get<PostDetailResponse>(postApiKeys.getPostById(postId)).then(response => mapPostDetail(response.data));
 
-  async getPostById(params: GetPostByIdDto) {
-    const response = await apiClient.get<PostDetailResponseDto>(`/posts/${params.id}`);
-
-    return response.data;
-  },
-
-  async togglePostLike(params: TogglePostLikeDto) {
-    const response = await apiClient.post<LikeResponseDto>(`/posts/${params.id}/like`);
-
-    return response.data;
-  },
-};
+export const togglePostLike = (params: TogglePostLikeDto) =>
+  post<PostLikeResponse>(postApiKeys.togglePostLike(params.postId), {}).then(response => mapPostLike(response.data));

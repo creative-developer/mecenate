@@ -1,29 +1,19 @@
-import { apiClient } from '@shared/api';
+import { get, post } from '@shared/api/axios';
 
-import {
-  AddCommentDto,
-  CommentCreatedResponseDto,
-  CommentsResponseDto,
-  GetCommentsQueryDto,
-} from './dto';
+import { commentApiKeys } from './consts';
+import { AddCommentDto, GetCommentsDto } from './dto';
+import { mapCommentCreated, mapCommentsList } from './mapper';
+import { CommentCreatedResponse, CommentsResponse } from './mapper/types';
 
-export const commentsApi = {
-  async getComments(params: GetCommentsQueryDto) {
-    const response = await apiClient.get<CommentsResponseDto>(`/posts/${params.id}/comments`, {
-      params: {
-        limit: params.limit,
-        cursor: params.cursor,
-      },
-    });
+export const getComments = (params: GetCommentsDto) =>
+  get<CommentsResponse>(commentApiKeys.getComments(params.postId), {
+    params: {
+      limit: params.limit,
+      cursor: params.cursor,
+    },
+  }).then(response => mapCommentsList(response.data));
 
-    return response.data;
-  },
-
-  async addComment(params: AddCommentDto) {
-    const response = await apiClient.post<CommentCreatedResponseDto>(`/posts/${params.id}/comments`, {
-      text: params.text,
-    });
-
-    return response.data;
-  },
-};
+export const addComment = (params: AddCommentDto) =>
+  post<CommentCreatedResponse>(commentApiKeys.addComment(params.postId), {
+    text: params.text,
+  }).then(response => mapCommentCreated(response.data));
