@@ -19,6 +19,11 @@ npm install
 npm run start
 ```
 
+## Переменные окружения
+
+- `EXPO_PUBLIC_APP_API_URL` — optional, базовый URL API (по умолчанию `https://k8s.mectest.ru/test-app`)
+- `EXPO_PUBLIC_APP_API_TOKEN` — optional, Bearer token. Если не задан, используется тестовый UUID-токен из OpenAPI.
+
 ## Архитектурные алиасы
 
 - `@app/*` -> `src/app/*`

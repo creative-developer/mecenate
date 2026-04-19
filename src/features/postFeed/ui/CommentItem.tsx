@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View, type ImageSourcePropType } from 'react-n
 
 import { ControlSizes, Spacing, Typography, UiKitColors } from '@shared/constants';
 import { useColorScheme } from '@shared/hooks';
-import { UILikeCounter } from '@shared/ui';
+import { UILikeCounter } from '@shared/ui/UILikeCounter';
 
 export type CommentItemProps = {
   authorName: string;

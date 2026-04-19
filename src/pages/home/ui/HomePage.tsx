@@ -1,29 +1,21 @@
-import { Link } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { UIButton, ThemedView } from '@shared/ui';
+import { PostsFeed } from '@features/postFeed';
 
 export function HomePage() {
+  const insets = useSafeAreaInsets();
+
   return (
-    <ThemedView style={styles.container}>
-      <View style={styles.content}>
-        <Link href="/ui-kit-showcase" asChild>
-          <UIButton label="Open UI-Kit Showcase" fullWidth />
-        </Link>
-      </View>
-    </ThemedView>
+    <View style={[styles.screen, { paddingTop: insets.top }]}>
+      <PostsFeed />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-  },
-  content: {
-    width: '100%',
-    maxWidth: 360,
+    backgroundColor: '#F5F8FD',
   },
 });

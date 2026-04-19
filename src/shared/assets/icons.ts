@@ -6,6 +6,9 @@ import ChatSendDisabled from './icons/chat-send-disabled.svg';
 import ChatSendPressed from './icons/chat-send-pressed.svg';
 import CommentDefaultDisabled from './icons/comment-default-disabled.svg';
 import CommentDefault from './icons/comment-default.svg';
+import DonateSolid from './icons/donate-solid.svg';
+import FeedEmptyIllustration from './icons/feed-empty-illustration.svg';
+import FeedErrorIllustration from './icons/feed-error-illustration.svg';
 import HeartOutlineDefault from './icons/heart-outline-default.svg';
 import HeartOutlineDisabled from './icons/heart-outline-disabled.svg';
 import HeartOutlinePressed from './icons/heart-outline-pressed.svg';
@@ -25,6 +28,9 @@ export const sharedIcons = {
   chatSendPressed: ChatSendPressed,
   commentDefault: CommentDefault,
   commentDefaultDisabled: CommentDefaultDisabled,
+  donateSolid: DonateSolid,
+  feedEmptyIllustration: FeedEmptyIllustration,
+  feedErrorIllustration: FeedErrorIllustration,
   heartOutlineDefault: HeartOutlineDefault,
   heartOutlineDisabled: HeartOutlineDisabled,
   heartOutlinePressed: HeartOutlinePressed,

@@ -13,7 +13,14 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { QueryProvider } from '@app/providers';
+import { setApiAuthTokenGetter } from '@shared/api';
 import { useColorScheme } from '@shared/hooks';
+
+const DEFAULT_APP_API_TOKEN = '550e8400-e29b-41d4-a716-446655440000';
+
+setApiAuthTokenGetter(() => {
+  return process.env.EXPO_PUBLIC_APP_API_TOKEN || DEFAULT_APP_API_TOKEN;
+});
 
 void SplashScreen.preventAutoHideAsync().catch(() => {
   // Ignore if splash screen is already hidden.
@@ -47,8 +54,6 @@ export function RootLayout() {
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="ui-kit-showcase" options={{ title: 'UI Kit Showcase' }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>

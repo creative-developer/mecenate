@@ -1,0 +1,19 @@
+<svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(56 56) rotate(90) scale(56)">
+      <stop offset="0" stop-color="#D5C9FF" />
+      <stop offset="1" stop-color="#9747FF" />
+    </radialGradient>
+  </defs>
+  <circle cx="56" cy="56" r="46" fill="url(#bg)" />
+  <ellipse cx="56" cy="92" rx="26" ry="8" fill="#DFD0F5" />
+  <circle cx="41" cy="47" r="5" fill="#57626F" />
+  <circle cx="71" cy="47" r="5" fill="#57626F" />
+  <circle cx="41" cy="47" r="2" fill="#FFFFFF" />
+  <circle cx="71" cy="47" r="2" fill="#FFFFFF" />
+  <path d="M41 70C45 63 52 59 56 59C60 59 67 63 71 70" stroke="#323A43" stroke-width="4" stroke-linecap="round" />
+  <path d="M18 33L30 39" stroke="#FF2B75" stroke-width="5" stroke-linecap="round" />
+  <path d="M82 39L94 33" stroke="#FF2B75" stroke-width="5" stroke-linecap="round" />
+  <path d="M24 24L36 33" stroke="#EA276B" stroke-width="5" stroke-linecap="round" />
+  <path d="M76 33L88 24" stroke="#EA276B" stroke-width="5" stroke-linecap="round" />
+</svg>
