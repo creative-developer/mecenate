@@ -5,3 +5,4 @@ export { useAddCommentMutation } from './mutations';
 export { useGetCommentsInfiniteQuery, useGetCommentsQuery } from './queries';
 export { commentsStore } from './store';
 export type { CommentAuthorModel, CommentCreatedModel, CommentModel, CommentsListModel } from './types';
+export * from './ui';

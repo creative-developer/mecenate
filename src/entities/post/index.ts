@@ -5,3 +5,4 @@ export type { PostsFeedFilterForm } from './forms';
 export type { AuthorModel, PostDetailModel, PostLikeModel, PostModel, PostsFeedModel, PostTier } from './types';
 export { postsStore } from './store';
 export { postQueryKeys } from './consts';
+export * from './ui';

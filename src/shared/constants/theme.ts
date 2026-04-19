@@ -77,6 +77,77 @@ export const FigmaColorPalette = {
   },
 } as const;
 
+const lightUiKitColors = {
+  primary: {
+    defaultBg: FigmaColorPalette.brand.b500,
+    pressedBg: FigmaColorPalette.brand.b600,
+    disabledBg: FigmaColorPalette.brand.b100,
+    text: FigmaColorPalette.neutral.white,
+    pressedText: FigmaColorPalette.brand.b075,
+    disabledText: FigmaColorPalette.neutral.white,
+  },
+  link: {
+    defaultText: FigmaColorPalette.brand.b500,
+    pressedText: FigmaColorPalette.brand.b600,
+    disabledText: FigmaColorPalette.brand.b100,
+  },
+  segmentedTabs: {
+    containerBg: FigmaColorPalette.neutral.white,
+    containerBorder: FigmaColorPalette.neutral.n075,
+    activeBg: FigmaColorPalette.brand.b500,
+    activePressedBg: FigmaColorPalette.brand.b700,
+    activeDisabledBg: FigmaColorPalette.brand.b100,
+    activeText: FigmaColorPalette.neutral.white,
+    inactiveBg: 'transparent',
+    inactivePressedBg: FigmaColorPalette.neutral.n150,
+    inactiveDisabledBg: FigmaColorPalette.neutral.white,
+    inactiveText: FigmaColorPalette.neutral.n600,
+    inactiveDisabledText: FigmaColorPalette.neutral.n300,
+  },
+  input: {
+    defaultBg: FigmaColorPalette.neutral.n050,
+    pressedBg: FigmaColorPalette.neutral.n100,
+    focusedBg: FigmaColorPalette.neutral.white,
+    disabledBg: FigmaColorPalette.neutral.white,
+    focusedBorder: FigmaColorPalette.neutral.n050,
+    text: FigmaColorPalette.neutral.black,
+    placeholder: FigmaColorPalette.neutral.n600,
+    focusedPlaceholder: FigmaColorPalette.neutral.n500,
+    disabledText: FigmaColorPalette.neutral.n250,
+    caret: FigmaColorPalette.neutral.black,
+  },
+  likeCounter: {
+    textDefault: FigmaColorPalette.neutral.n600,
+    textPressed: FigmaColorPalette.neutral.n800,
+    textDisabled: FigmaColorPalette.neutral.n350,
+  },
+  actionButton: {
+    inactiveBgDefault: FigmaColorPalette.neutral.n050,
+    inactiveBgPressed: FigmaColorPalette.neutral.n200,
+    inactiveBgDisabled: FigmaColorPalette.neutral.white,
+    activeLikeBgDefault: FigmaColorPalette.accent.p300,
+    activeLikeBgPressed: FigmaColorPalette.accent.p500,
+    activeLikeBgDisabled: FigmaColorPalette.accent.p100,
+    inactiveTextDefault: FigmaColorPalette.neutral.n600,
+    inactiveTextPressed: FigmaColorPalette.neutral.n700,
+    inactiveTextDisabled: FigmaColorPalette.neutral.n400,
+    activeLikeText: FigmaColorPalette.accent.p050,
+    activeLikeTextDisabled: FigmaColorPalette.accent.p050,
+  },
+  commentItem: {
+    background: FigmaColorPalette.neutral.white,
+    titleText: FigmaColorPalette.neutral.n900,
+    bodyText: FigmaColorPalette.neutral.n900,
+  },
+} as const;
+
+export const UiKitColors = {
+  light: lightUiKitColors,
+  dark: lightUiKitColors,
+} as const;
+
+export type ThemeMode = keyof typeof UiKitColors;
+
 export const Colors = {
   light: {
     text: FigmaColorPalette.neutral.n900,
@@ -109,6 +180,7 @@ export const Colors = {
 } as const;
 
 export const Spacing = {
+  xxs: 2,
   xs: 6,
   sm: 8,
   md: 12,
@@ -117,10 +189,42 @@ export const Spacing = {
   xxl: 32,
 } as const;
 
+export const BorderRadius = {
+  none: 0,
+  xs: 10,
+  sm: 12,
+  md: 14,
+  lg: 20,
+  xl: 22,
+  full: 999,
+} as const;
+
 export const Sizes = {
+  iconSm: 15,
   iconMd: 18,
   iconXl: 100,
   headerSymbol: 310,
+} as const;
+
+export const ControlSizes = {
+  buttonHeight: 42,
+  buttonHorizontalPadding: 32,
+  buttonVerticalPadding: 8,
+  actionButtonHeight: 36,
+  actionButtonHorizontalPaddingLeft: 6,
+  actionButtonHorizontalPaddingRight: 12,
+  actionButtonVerticalPadding: 6,
+  actionButtonIconBox: 24,
+  actionButtonIcon: 15,
+  segmentedTabHeight: 38,
+  textInputHeight: 40,
+  textInputHorizontalPadding: 16,
+  textInputVerticalPadding: 10,
+  chatMessageButtonSize: 30,
+  chatMessageButtonIcon: 18.75,
+  likeCounterIconBox: 24,
+  likeCounterIcon: 15,
+  avatarSize: 40,
 } as const;
 
 export const Offsets = {

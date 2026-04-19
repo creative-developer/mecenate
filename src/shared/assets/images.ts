@@ -7,4 +7,5 @@ export const sharedImages = {
   partialReactLogo: require('./images/partial-react-logo.png'),
   reactLogo: require('./images/react-logo.png'),
   splashIcon: require('./images/splash-icon.png'),
+  uiKitCommentAvatar: require('./images/ui-kit/comment-avatar.png'),
 } as const;
