@@ -1,33 +1,33 @@
 export type PostTier = 'free' | 'paid';
 
 export type AuthorModel = {
-  id: string;
-  username: string;
-  displayName: string;
+  id: string | null;
+  username: string | null;
+  displayName: string | null;
   avatarUrl: string | null;
   bio: string | null;
-  subscribersCount: number;
-  isVerified: boolean;
+  subscribersCount: number | null;
+  isVerified: boolean | null;
 };
 
 export type PostModel = {
-  id: string;
+  id: string | null;
   author: AuthorModel | null;
-  title: string;
-  body: string;
-  preview: string;
+  title: string | null;
+  body: string | null;
+  preview: string | null;
   coverUrl: string | null;
-  likesCount: number;
-  commentsCount: number;
-  isLiked: boolean;
-  tier: PostTier;
+  likesCount: number | null;
+  commentsCount: number | null;
+  isLiked: boolean | null;
+  tier: PostTier | null;
   createdAt: string | null;
 };
 
 export type PostsFeedModel = {
-  posts: PostModel[];
+  posts: PostModel[] | null;
   nextCursor: string | null;
-  hasMore: boolean;
+  hasMore: boolean | null;
 };
 
 export type PostDetailModel = {
@@ -35,6 +35,6 @@ export type PostDetailModel = {
 };
 
 export type PostLikeModel = {
-  isLiked: boolean;
-  likesCount: number;
+  isLiked: boolean | null;
+  likesCount: number | null;
 };

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { useGetPostsFeedInfiniteQuery } from '@entities/post';
+import { useGetPostsFeedInfiniteQuery, type PostModel } from '@entities/post';
 
 type UseGetPostsFeedOptions = {
   limit?: number;
@@ -14,7 +14,11 @@ export const useGetPostsFeed = ({ limit = DEFAULT_LIMIT }: UseGetPostsFeedOption
   const feedQuery = useGetPostsFeedInfiniteQuery({ limit });
 
   const posts = useMemo(() => {
-    return feedQuery.data?.pages.flatMap(page => page.posts) ?? [];
+    return (
+      feedQuery.data?.pages
+        .flatMap(page => page.posts ?? [])
+        .filter((post): post is PostModel => post !== null) ?? []
+    );
   }, [feedQuery.data]);
 
   const isInitialLoading = feedQuery.isPending && !feedQuery.data;

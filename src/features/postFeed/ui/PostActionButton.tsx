@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View, type PressableProps, type PressableStateCallbackType } from 'react-native';
 
 import { sharedIcons, type SharedIconComponent } from '@shared/assets';
@@ -15,56 +16,95 @@ export type PostActionButtonProps = Omit<PressableProps, 'children'> & {
   state?: PostActionButtonState;
 };
 
-const resolveState = ({
-  disabled,
-  pressed,
-  state,
-}: {
-  disabled: boolean;
-  pressed: boolean;
-  state?: PostActionButtonState;
-}): PostActionButtonState => {
-  if (state) {
-    return state;
-  }
+type Variant = 'likeActive' | 'likeInactive' | 'comment';
 
-  if (disabled) {
-    return 'disabled';
+type VariantVisual = Record<
+  PostActionButtonState,
+  {
+    backgroundColor: string;
+    textColor: string;
+    icon: SharedIconComponent;
   }
+>;
 
-  if (pressed) {
-    return 'pressed';
-  }
+const useVariantVisuals = (variant: Variant): VariantVisual => {
+  const theme = useColorScheme() ?? 'light';
 
-  return 'default';
+  return useMemo(() => {
+    const { actionButton } = UiKitColors[theme];
+
+    const visuals: Record<Variant, VariantVisual> = {
+      likeActive: {
+        default: {
+          backgroundColor: actionButton.activeLikeBgDefault,
+          textColor: actionButton.activeLikeText,
+          icon: sharedIcons.mecenatkaLikeActive,
+        },
+        pressed: {
+          backgroundColor: actionButton.activeLikeBgPressed,
+          textColor: actionButton.activeLikeText,
+          icon: sharedIcons.mecenatkaLikeActive,
+        },
+        disabled: {
+          backgroundColor: actionButton.activeLikeBgDisabled,
+          textColor: actionButton.activeLikeTextDisabled,
+          icon: sharedIcons.mecenatkaLikeActive,
+        },
+      },
+      likeInactive: {
+        default: {
+          backgroundColor: actionButton.inactiveBgDefault,
+          textColor: actionButton.inactiveTextDefault,
+          icon: sharedIcons.mecenatkaLikeDefault,
+        },
+        pressed: {
+          backgroundColor: actionButton.inactiveBgPressed,
+          textColor: actionButton.inactiveTextPressed,
+          icon: sharedIcons.mecenatkaLikeDefault,
+        },
+        disabled: {
+          backgroundColor: actionButton.inactiveBgDisabled,
+          textColor: actionButton.inactiveTextDisabled,
+          icon: sharedIcons.mecenatkaLikeDisabled,
+        },
+      },
+      comment: {
+        default: {
+          backgroundColor: actionButton.inactiveBgDefault,
+          textColor: actionButton.inactiveTextDefault,
+          icon: sharedIcons.commentDefault,
+        },
+        pressed: {
+          backgroundColor: actionButton.inactiveBgPressed,
+          textColor: actionButton.inactiveTextPressed,
+          icon: sharedIcons.commentDefault,
+        },
+        disabled: {
+          backgroundColor: actionButton.inactiveBgDisabled,
+          textColor: actionButton.inactiveTextDisabled,
+          icon: sharedIcons.commentDefaultDisabled,
+        },
+      },
+    };
+
+    return visuals[variant];
+  }, [theme, variant]);
 };
 
-const resolveIcon = ({
-  active,
-  state,
-  type,
-}: {
-  active: boolean;
-  state: PostActionButtonState;
-  type: PostActionButtonType;
-}): SharedIconComponent => {
-  if (type === 'comment') {
-    if (state === 'disabled') {
-      return sharedIcons.commentDefaultDisabled;
-    }
+const pickVariant = (type: PostActionButtonType, active: boolean): Variant => {
+  if (type === 'comment') return 'comment';
+  return active ? 'likeActive' : 'likeInactive';
+};
 
-    return sharedIcons.commentDefault;
-  }
-
-  if (active) {
-    return sharedIcons.mecenatkaLikeActive;
-  }
-
-  if (state === 'disabled') {
-    return sharedIcons.mecenatkaLikeDisabled;
-  }
-
-  return sharedIcons.mecenatkaLikeDefault;
+const pickState = (
+  disabled: boolean,
+  pressed: boolean,
+  explicitState?: PostActionButtonState,
+): PostActionButtonState => {
+  if (explicitState) return explicitState;
+  if (disabled) return 'disabled';
+  if (pressed) return 'pressed';
+  return 'default';
 };
 
 export function PostActionButton({
@@ -76,70 +116,38 @@ export function PostActionButton({
   state,
   ...pressableProps
 }: PostActionButtonProps) {
-  const theme = useColorScheme() ?? 'light';
-  const colors = UiKitColors[theme];
-  const isDisabledProp = Boolean(disabled);
+  const variant = pickVariant(type, active);
+  const visuals = useVariantVisuals(variant);
 
-  const isActiveLike = type === 'like' && active;
+  const isDisabled = Boolean(disabled) || state === 'disabled' || !onPress;
 
-  const containerStyles = ({ pressed }: PressableStateCallbackType) => {
-    const visualState = resolveState({ disabled: isDisabledProp, pressed, state });
+  const renderContent = ({ pressed }: PressableStateCallbackType) => {
+    const pickedState = pickState(isDisabled, pressed, state);
+    const current = visuals[pickedState];
 
-    const backgroundColor = isActiveLike
-      ? visualState === 'disabled'
-        ? colors.actionButton.activeLikeBgDisabled
-        : visualState === 'pressed'
-          ? colors.actionButton.activeLikeBgPressed
-          : colors.actionButton.activeLikeBgDefault
-      : visualState === 'disabled'
-        ? colors.actionButton.inactiveBgDisabled
-        : visualState === 'pressed'
-          ? colors.actionButton.inactiveBgPressed
-          : colors.actionButton.inactiveBgDefault;
-
-    return [styles.root, { backgroundColor }];
+    return (
+      <View style={[styles.root, { backgroundColor: current.backgroundColor }]}>
+        <View style={styles.iconBox}>
+          <RenderSharedIcon
+            icon={current.icon}
+            width={ControlSizes.actionButtonIcon}
+            height={ControlSizes.actionButtonIcon}
+          />
+        </View>
+        <Text style={[styles.count, { color: current.textColor }]}>{count}</Text>
+      </View>
+    );
   };
-
-  const textStyles = (pressed: boolean) => {
-    const visualState = resolveState({ disabled: isDisabledProp, pressed, state });
-
-    const color = isActiveLike
-      ? visualState === 'disabled'
-        ? colors.actionButton.activeLikeTextDisabled
-        : colors.actionButton.activeLikeText
-      : visualState === 'disabled'
-        ? colors.actionButton.inactiveTextDisabled
-        : visualState === 'pressed'
-          ? colors.actionButton.inactiveTextPressed
-          : colors.actionButton.inactiveTextDefault;
-
-    return [styles.count, { color }];
-  };
-
-  const isDisabled = isDisabledProp || state === 'disabled' || !onPress;
 
   return (
     <Pressable
       {...pressableProps}
       onPress={onPress}
       disabled={isDisabled}
-      style={containerStyles}
       accessibilityRole="button"
       accessibilityState={{ disabled: isDisabled }}
     >
-      {({ pressed }) => {
-        const visualState = resolveState({ disabled: isDisabledProp, pressed, state });
-        const icon = resolveIcon({ active, state: visualState, type });
-
-        return (
-          <>
-            <View style={styles.iconBox}>
-              <RenderSharedIcon icon={icon} width={ControlSizes.actionButtonIcon} height={ControlSizes.actionButtonIcon} />
-            </View>
-            <Text style={textStyles(pressed)}>{count}</Text>
-          </>
-        );
-      }}
+      {renderContent}
     </Pressable>
   );
 }

@@ -2,12 +2,13 @@ import { useCallback, useRef } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 
 import type { PostModel } from '@entities/post';
+
 import { sharedIcons } from '@shared/assets';
 import { FigmaColorPalette, Spacing, UiKitColors } from '@shared/constants';
 import { useColorScheme } from '@shared/hooks';
 import { UIStateCard } from '@shared/ui/UIStateCard';
 
-import { useGetPostsFeed } from '../model/useGetPostsFeed';
+import { useGetPostsFeed } from '../model/hooks/useGetPostsFeed';
 import { PostCard } from './PostCard';
 import { PostCardSkeleton } from './PostCardSkeleton';
 import { PostCommentButton } from './PostCommentButton';
@@ -101,7 +102,7 @@ export function PostsFeed() {
     <FlatList
       ref={listRef}
       data={posts}
-      keyExtractor={item => item.id}
+      keyExtractor={(item, index) => item.id ?? String(index)}
       renderItem={renderItem}
       onEndReached={fetchNextPage}
       onEndReachedThreshold={0.25}

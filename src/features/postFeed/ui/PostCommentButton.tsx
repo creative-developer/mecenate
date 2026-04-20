@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import type { PostModel } from '@entities/post';
 
-import { useOpenPostComments } from '../model/useOpenPostComments';
+import { useOpenPostComments } from '../model/hooks/useOpenPostComments';
 import { PostActionButton } from './PostActionButton';
 
 export type PostCommentButtonProps = {
@@ -16,5 +16,5 @@ export function PostCommentButton({ post }: PostCommentButtonProps) {
     openPostComments(post);
   }, [post, openPostComments]);
 
-  return <PostActionButton type="comment" count={post.commentsCount} onPress={handlePress} />;
+  return <PostActionButton type="comment" count={post.commentsCount ?? 0} onPress={handlePress} />;
 }

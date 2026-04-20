@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { PostModel } from '@entities/post';
+
 import { Typography } from '@shared/constants';
 import { UIButtonLink } from '@shared/ui/UIButtonLink';
 
-import { usePostExpandable } from '../model/usePostExpandable';
+import { usePostExpandable } from '../model/hooks/usePostExpandable';
 
 export type PostExpandableBodyProps = {
   post: PostModel;

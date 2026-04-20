@@ -2,12 +2,13 @@ import { useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { PostModel } from '@entities/post';
+
 import { sharedIcons } from '@shared/assets';
 import { Spacing, Typography } from '@shared/constants';
 import { RenderSharedIcon } from '@shared/ui/RenderSharedIcon';
 import { UIButton } from '@shared/ui/UIButton';
 
-import { useSendPostDonate } from '../model/useSendPostDonate';
+import { useSendPostDonate } from '../model/hooks/useSendPostDonate';
 
 export type PostPaidOverlayProps = {
   post: PostModel;
@@ -28,9 +29,7 @@ export function PostPaidOverlay({ post }: PostPaidOverlayProps) {
             <RenderSharedIcon icon={sharedIcons.donateSolid} width={20} height={20} />
           </View>
 
-          <Text style={styles.messageText}>
-            Контент скрыт пользователем. {'\n'}Доступ откроется после доната
-          </Text>
+          <Text style={styles.messageText}>Контент скрыт пользователем. {'\n'}Доступ откроется после доната</Text>
         </View>
 
         <UIButton label="Отправить донат" onPress={handleDonatePress} fullWidth />

@@ -1,5 +1,3 @@
-import { toNullableString } from '@shared/helpers';
-
 import { PostModel, PostsFeedModel } from '../types';
 import { mapPost } from './mapPost';
 import { PostsFeedResponse } from './types';
@@ -12,7 +10,7 @@ export const mapPostsFeed = (response: PostsFeedResponse): PostsFeedModel => {
 
   return {
     posts,
-    nextCursor: toNullableString(data?.nextCursor),
+    nextCursor: data?.nextCursor ?? null,
     hasMore: Boolean(data?.hasMore),
   };
 };

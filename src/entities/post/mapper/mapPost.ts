@@ -1,4 +1,4 @@
-import { toNullableString, toSafeNumber, toSafeString } from '@shared/helpers';
+import { toNullableString, toSafeNumber } from '@shared/helpers';
 
 import { PostModel, PostTier } from '../types';
 import { mapAuthor } from './mapAuthor';
@@ -14,16 +14,16 @@ export const mapPost = (raw: PostRaw | null | undefined): PostModel | null => {
   }
 
   return {
-    id: toSafeString(raw.id),
+    id: raw.id ?? null,
     author: mapAuthor(raw.author),
-    title: toSafeString(raw.title),
-    body: toSafeString(raw.body),
-    preview: toSafeString(raw.preview),
-    coverUrl: toNullableString(raw.coverUrl),
-    likesCount: toSafeNumber(raw.likesCount),
-    commentsCount: toSafeNumber(raw.commentsCount),
-    isLiked: Boolean(raw.isLiked),
-    tier: toPostTier(raw.tier),
-    createdAt: toNullableString(raw.createdAt),
+    title: raw.title ?? null,
+    body: raw.body ?? null,
+    preview: raw.preview ?? null,
+    coverUrl: raw.coverUrl ?? null,
+    likesCount: toSafeNumber(raw.likesCount) ?? null,
+    commentsCount: toSafeNumber(raw.commentsCount) ?? null,
+    isLiked: raw.isLiked ?? null,
+    tier: toPostTier(raw.tier) ?? null,
+    createdAt: toNullableString(raw.createdAt) ?? null,
   };
 };

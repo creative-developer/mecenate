@@ -1,25 +1,25 @@
 export type CommentAuthorModel = {
-  id: string;
-  username: string;
-  displayName: string;
+  id: string | null;
+  username: string | null;
+  displayName: string | null;
   avatarUrl: string | null;
   bio: string | null;
-  subscribersCount: number;
-  isVerified: boolean;
+  subscribersCount: number | null;
+  isVerified: boolean | null;
 };
 
 export type CommentModel = {
-  id: string;
-  postId: string;
+  id: string | null;
+  postId: string | null;
   author: CommentAuthorModel | null;
-  text: string;
+  text: string | null;
   createdAt: string | null;
 };
 
 export type CommentsListModel = {
-  comments: CommentModel[];
+  comments: CommentModel[] | null;
   nextCursor: string | null;
-  hasMore: boolean;
+  hasMore: boolean | null;
 };
 
 export type CommentCreatedModel = {

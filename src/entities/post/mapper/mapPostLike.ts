@@ -6,6 +6,6 @@ import { PostLikeResponse } from './types';
 export const mapPostLike = (response: PostLikeResponse): PostLikeModel => {
   return {
     isLiked: Boolean(response?.data?.isLiked),
-    likesCount: toSafeNumber(response?.data?.likesCount),
+    likesCount: toSafeNumber(response?.data?.likesCount) ?? null,
   };
 };
