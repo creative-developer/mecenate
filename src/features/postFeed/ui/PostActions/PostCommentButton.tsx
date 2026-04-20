@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import type { PostModel } from '@entities/post';
 
-import { useOpenPostComments } from '../model/hooks/useOpenPostComments';
+import { useOpenPostComments } from '../../model/hooks/useOpenPostComments';
 import { PostActionButton } from './PostActionButton';
 
 export type PostCommentButtonProps = {

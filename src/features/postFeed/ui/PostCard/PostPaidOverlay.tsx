@@ -8,7 +8,7 @@ import { Spacing, Typography } from '@shared/constants';
 import { RenderSharedIcon } from '@shared/ui/RenderSharedIcon';
 import { UIButton } from '@shared/ui/UIButton';
 
-import { useSendPostDonate } from '../model/hooks/useSendPostDonate';
+import { useSendPostDonate } from '../../model/hooks/useSendPostDonate';
 
 export type PostPaidOverlayProps = {
   post: PostModel;

@@ -14,7 +14,7 @@ export const usePostExpandable = (post: PostModel) => {
     return {
       collapsedText: collapsed,
       expandedText: expanded,
-      canExpand: expanded.length > COLLAPSE_THRESHOLD && expanded !== collapsed,
+      canExpand: (expanded?.length ?? 0) > COLLAPSE_THRESHOLD && expanded !== collapsed,
     };
   }, [post.body, post.preview]);
 

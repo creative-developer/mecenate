@@ -9,12 +9,12 @@ import { useColorScheme } from '@shared/hooks';
 import { UIStateCard } from '@shared/ui/UIStateCard';
 
 import { useGetPostsFeed } from '../model/hooks/useGetPostsFeed';
-import { PostCard } from './PostCard';
-import { PostCardSkeleton } from './PostCardSkeleton';
-import { PostCommentButton } from './PostCommentButton';
-import { PostExpandableBody } from './PostExpandableBody';
-import { PostLikeButton } from './PostLikeButton';
-import { PostPaidOverlay } from './PostPaidOverlay';
+import { PostCommentButton } from './PostActions/PostCommentButton';
+import { PostLikeButton } from './PostActions/PostLikeButton';
+import { PostCard } from './PostCard/PostCard';
+import { PostCardSkeleton } from './PostCard/PostCardSkeleton';
+import { PostExpandableBody } from './PostCard/PostExpandableBody';
+import { PostPaidOverlay } from './PostCard/PostPaidOverlay';
 
 const FEED_PAGE_SIZE = 10;
 const SKELETON_ITEMS_COUNT = 3;
