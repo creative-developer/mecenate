@@ -1,7 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
 import { BorderRadius, Spacing, UiKitColors } from '@shared/constants';
-import { useColorScheme } from '@shared/hooks';
 
 import { UISegmentedTabItem } from './UISegmentedTabItem';
 
@@ -19,20 +18,10 @@ export type UISegmentedTabsProps = {
 };
 
 export function UISegmentedTabs({ items, value, onChange, disabledKeys = [] }: UISegmentedTabsProps) {
-  const theme = useColorScheme() ?? 'light';
-  const colors = UiKitColors[theme];
   const disabledSet = new Set(disabledKeys);
 
   return (
-    <View
-      style={[
-        styles.root,
-        {
-          backgroundColor: colors.segmentedTabs.containerBg,
-          borderColor: colors.segmentedTabs.containerBorder,
-        },
-      ]}
-    >
+    <View style={styles.root}>
       {items.map(item => {
         const isDisabled = Boolean(item.disabled || disabledSet.has(item.key));
 
@@ -64,5 +53,7 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.full,
     padding: Spacing.xxs,
     width: '100%',
+    backgroundColor: UiKitColors.segmentedTabs.containerBg,
+    borderColor: UiKitColors.segmentedTabs.containerBorder,
   },
 });

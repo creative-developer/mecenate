@@ -11,10 +11,12 @@ export type PostCommentButtonProps = {
 
 export function PostCommentButton({ post }: PostCommentButtonProps) {
   const { openPostComments } = useOpenPostComments();
+  const isDisabled = !post.id;
 
   const handlePress = useCallback(() => {
+    if (isDisabled) return;
     openPostComments(post);
-  }, [post, openPostComments]);
+  }, [isDisabled, post, openPostComments]);
 
-  return <PostActionButton type="comment" count={post.commentsCount ?? 0} onPress={handlePress} />;
+  return <PostActionButton type="comment" count={post.commentsCount ?? 0} onPress={handlePress} disabled={isDisabled} />;
 }

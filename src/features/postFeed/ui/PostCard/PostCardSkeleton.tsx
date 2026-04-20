@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import { BorderRadius, Colors, Spacing } from '@shared/constants';
+import { BorderRadius, Spacing, UiKitColors } from '@shared/constants';
 import { UISkeleton } from '@shared/ui/UISkeleton';
 
 export function PostCardSkeleton() {
@@ -31,11 +31,11 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     borderRadius: BorderRadius.sm,
-    backgroundColor: Colors.light.surface,
-    paddingHorizontal: Spacing.md + Spacing.sm,
+    paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.md,
     gap: Spacing.md,
     overflow: 'hidden',
+    backgroundColor: UiKitColors.feed.cardBackground,
   },
   avatarRow: {
     flexDirection: 'row',
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
   },
   coverSkeleton: {
     aspectRatio: 1,
-    marginHorizontal: -(Spacing.md + Spacing.sm),
-    backgroundColor: 'rgba(238, 239, 241, 0.8)',
+    marginHorizontal: -Spacing.lg,
+    backgroundColor: UiKitColors.feed.skeletonBase,
   },
   textWrap: {
     width: '100%',

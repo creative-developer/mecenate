@@ -1,9 +1,7 @@
-import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View, type PressableProps, type PressableStateCallbackType } from 'react-native';
 
 import { sharedIcons, type SharedIconComponent } from '@shared/assets';
 import { BorderRadius, ControlSizes, Spacing, Typography, UiKitColors } from '@shared/constants';
-import { useColorScheme } from '@shared/hooks';
 import { RenderSharedIcon } from '@shared/ui/RenderSharedIcon';
 
 export type PostActionButtonType = 'like' | 'comment';
@@ -27,68 +25,60 @@ type VariantVisual = Record<
   }
 >;
 
-const useVariantVisuals = (variant: Variant): VariantVisual => {
-  const theme = useColorScheme() ?? 'light';
+const { actionButton } = UiKitColors;
 
-  return useMemo(() => {
-    const { actionButton } = UiKitColors[theme];
-
-    const visuals: Record<Variant, VariantVisual> = {
-      likeActive: {
-        default: {
-          backgroundColor: actionButton.activeLikeBgDefault,
-          textColor: actionButton.activeLikeText,
-          icon: sharedIcons.mecenatkaLikeActive,
-        },
-        pressed: {
-          backgroundColor: actionButton.activeLikeBgPressed,
-          textColor: actionButton.activeLikeText,
-          icon: sharedIcons.mecenatkaLikeActive,
-        },
-        disabled: {
-          backgroundColor: actionButton.activeLikeBgDisabled,
-          textColor: actionButton.activeLikeTextDisabled,
-          icon: sharedIcons.mecenatkaLikeActive,
-        },
-      },
-      likeInactive: {
-        default: {
-          backgroundColor: actionButton.inactiveBgDefault,
-          textColor: actionButton.inactiveTextDefault,
-          icon: sharedIcons.mecenatkaLikeDefault,
-        },
-        pressed: {
-          backgroundColor: actionButton.inactiveBgPressed,
-          textColor: actionButton.inactiveTextPressed,
-          icon: sharedIcons.mecenatkaLikeDefault,
-        },
-        disabled: {
-          backgroundColor: actionButton.inactiveBgDisabled,
-          textColor: actionButton.inactiveTextDisabled,
-          icon: sharedIcons.mecenatkaLikeDisabled,
-        },
-      },
-      comment: {
-        default: {
-          backgroundColor: actionButton.inactiveBgDefault,
-          textColor: actionButton.inactiveTextDefault,
-          icon: sharedIcons.commentDefault,
-        },
-        pressed: {
-          backgroundColor: actionButton.inactiveBgPressed,
-          textColor: actionButton.inactiveTextPressed,
-          icon: sharedIcons.commentDefault,
-        },
-        disabled: {
-          backgroundColor: actionButton.inactiveBgDisabled,
-          textColor: actionButton.inactiveTextDisabled,
-          icon: sharedIcons.commentDefaultDisabled,
-        },
-      },
-    };
-
-    return visuals[variant];
-  }, [theme, variant]);
+const VARIANT_VISUALS: Record<Variant, VariantVisual> = {
+  likeActive: {
+    default: {
+      backgroundColor: actionButton.activeLikeBgDefault,
+      textColor: actionButton.activeLikeText,
+      icon: sharedIcons.mecenatkaLikeActive,
+    },
+    pressed: {
+      backgroundColor: actionButton.activeLikeBgPressed,
+      textColor: actionButton.activeLikeText,
+      icon: sharedIcons.mecenatkaLikeActive,
+    },
+    disabled: {
+      backgroundColor: actionButton.activeLikeBgDisabled,
+      textColor: actionButton.activeLikeTextDisabled,
+      icon: sharedIcons.mecenatkaLikeActive,
+    },
+  },
+  likeInactive: {
+    default: {
+      backgroundColor: actionButton.inactiveBgDefault,
+      textColor: actionButton.inactiveTextDefault,
+      icon: sharedIcons.mecenatkaLikeDefault,
+    },
+    pressed: {
+      backgroundColor: actionButton.inactiveBgPressed,
+      textColor: actionButton.inactiveTextPressed,
+      icon: sharedIcons.mecenatkaLikeDefault,
+    },
+    disabled: {
+      backgroundColor: actionButton.inactiveBgDisabled,
+      textColor: actionButton.inactiveTextDisabled,
+      icon: sharedIcons.mecenatkaLikeDisabled,
+    },
+  },
+  comment: {
+    default: {
+      backgroundColor: actionButton.inactiveBgDefault,
+      textColor: actionButton.inactiveTextDefault,
+      icon: sharedIcons.commentDefault,
+    },
+    pressed: {
+      backgroundColor: actionButton.inactiveBgPressed,
+      textColor: actionButton.inactiveTextPressed,
+      icon: sharedIcons.commentDefault,
+    },
+    disabled: {
+      backgroundColor: actionButton.inactiveBgDisabled,
+      textColor: actionButton.inactiveTextDisabled,
+      icon: sharedIcons.commentDefaultDisabled,
+    },
+  },
 };
 
 const pickVariant = (type: PostActionButtonType, active: boolean): Variant => {
@@ -117,7 +107,7 @@ export function PostActionButton({
   ...pressableProps
 }: PostActionButtonProps) {
   const variant = pickVariant(type, active);
-  const visuals = useVariantVisuals(variant);
+  const visuals = VARIANT_VISUALS[variant];
 
   const isDisabled = Boolean(disabled) || state === 'disabled' || !onPress;
 

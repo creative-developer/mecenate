@@ -1,7 +1,6 @@
 import { Image, StyleSheet, Text, View, type ImageSourcePropType } from 'react-native';
 
 import { ControlSizes, Spacing, Typography, UiKitColors } from '@shared/constants';
-import { useColorScheme } from '@shared/hooks';
 import { UILikeCounter } from '@shared/ui/UILikeCounter';
 
 export type CommentItemProps = {
@@ -14,11 +13,8 @@ export type CommentItemProps = {
 };
 
 export function CommentItem({ authorName, text, avatarSource, likes, liked = false, onLikePress }: CommentItemProps) {
-  const theme = useColorScheme() ?? 'light';
-  const colors = UiKitColors[theme];
-
   return (
-    <View style={[styles.root, { backgroundColor: colors.commentItem.background }]}>
+    <View style={styles.root}>
       <View style={styles.contentBlock}>
         <View style={styles.avatarBox}>
           {avatarSource ? (
@@ -31,10 +27,10 @@ export function CommentItem({ authorName, text, avatarSource, likes, liked = fal
         </View>
 
         <View style={styles.labelsBlock}>
-          <Text style={[styles.authorName, { color: colors.commentItem.titleText }]} numberOfLines={1}>
+          <Text style={styles.authorName} numberOfLines={1}>
             {authorName}
           </Text>
-          <Text style={[styles.commentText, { color: colors.commentItem.bodyText }]} numberOfLines={2}>
+          <Text style={styles.commentText} numberOfLines={2}>
             {text}
           </Text>
         </View>
@@ -52,6 +48,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: Spacing.md,
     paddingVertical: Spacing.sm,
+    backgroundColor: UiKitColors.commentItem.background,
   },
   contentBlock: {
     flex: 1,
@@ -77,12 +74,12 @@ const styles = StyleSheet.create({
     borderRadius: ControlSizes.avatarSize / 2,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(230, 233, 239, 0.9)',
+    backgroundColor: UiKitColors.feed.avatarFallbackBg,
   },
   avatarFallbackText: {
     ...Typography.captionStrong,
     textTransform: 'uppercase',
-    color: '#57626F',
+    color: UiKitColors.feed.avatarFallbackText,
   },
   labelsBlock: {
     flex: 1,
@@ -92,8 +89,10 @@ const styles = StyleSheet.create({
   },
   authorName: {
     ...Typography.heading,
+    color: UiKitColors.commentItem.titleText,
   },
   commentText: {
     ...Typography.bodySm,
+    color: UiKitColors.commentItem.bodyText,
   },
 });

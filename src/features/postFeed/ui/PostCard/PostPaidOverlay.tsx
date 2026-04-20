@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import type { PostModel } from '@entities/post';
 
 import { sharedIcons } from '@shared/assets';
-import { Spacing, Typography } from '@shared/constants';
+import { BorderRadius, ControlSizes, Spacing, Typography, UiKitColors } from '@shared/constants';
 import { RenderSharedIcon } from '@shared/ui/RenderSharedIcon';
 import { UIButton } from '@shared/ui/UIButton';
 
@@ -29,10 +29,12 @@ export function PostPaidOverlay({ post }: PostPaidOverlayProps) {
             <RenderSharedIcon icon={sharedIcons.donateSolid} width={20} height={20} />
           </View>
 
-          <Text style={styles.messageText}>Контент скрыт пользователем. {'\n'}Доступ откроется после доната</Text>
+          <Text style={styles.messageText}>
+            Контент скрыт пользователем. {'\n'}Доступ откроется после доната
+          </Text>
         </View>
 
-        <UIButton label="Отправить донат" onPress={handleDonatePress} fullWidth />
+        <UIButton label="Отправить донат" onPress={handleDonatePress} style={styles.button} />
       </View>
     </View>
   );
@@ -41,9 +43,9 @@ export function PostPaidOverlay({ post }: PostPaidOverlayProps) {
 const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.5)',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: UiKitColors.feed.paidOverlay,
   },
   messageWrap: {
     width: '100%',
@@ -60,14 +62,18 @@ const styles = StyleSheet.create({
   iconBox: {
     width: 42,
     height: 42,
-    borderRadius: 10,
-    backgroundColor: '#6115CD',
+    borderRadius: BorderRadius.xs,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: UiKitColors.feed.paidOverlayIconBg,
   },
   messageText: {
     ...Typography.button,
-    color: '#FFFFFF',
     textAlign: 'center',
+    color: UiKitColors.feed.paidOverlayText,
+  },
+  button: {
+    width: 239,
+    height: ControlSizes.buttonHeight,
   },
 });

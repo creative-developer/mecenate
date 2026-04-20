@@ -10,15 +10,22 @@ export type PostLikeButtonProps = {
 };
 
 export function PostLikeButton({ post }: PostLikeButtonProps) {
-  const { togglePostLike } = useTogglePostLike();
+  const { togglePostLike, isLoading } = useTogglePostLike();
+  const isDisabled = !post.id || isLoading;
 
   const handlePress = useCallback(() => {
-    if (!post.id) return;
+    if (isDisabled || !post.id) return;
 
     togglePostLike(post.id);
-  }, [post.id, togglePostLike]);
+  }, [isDisabled, post.id, togglePostLike]);
 
   return (
-    <PostActionButton type="like" count={post.likesCount ?? 0} active={post.isLiked ?? false} onPress={handlePress} />
+    <PostActionButton
+      type="like"
+      count={post.likesCount ?? 0}
+      active={post.isLiked ?? false}
+      onPress={handlePress}
+      disabled={isDisabled}
+    />
   );
 }

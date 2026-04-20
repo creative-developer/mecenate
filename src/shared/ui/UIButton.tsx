@@ -12,7 +12,6 @@ import {
 
 import { sharedIcons } from '@shared/assets';
 import { BorderRadius, ControlSizes, Spacing, Typography, UiKitColors } from '@shared/constants';
-import { useColorScheme } from '@shared/hooks';
 import { RenderSharedIcon } from '@shared/ui/RenderSharedIcon';
 
 export type UIButtonState = 'default' | 'pressed' | 'loading' | 'disabled';
@@ -65,8 +64,6 @@ export function UIButton({
   onPress,
   ...pressableProps
 }: UIButtonProps) {
-  const theme = useColorScheme() ?? 'light';
-  const colors = UiKitColors[theme];
   const spinnerRotation = useRef(new Animated.Value(0)).current;
   const loaderIcon = sharedIcons.loaderSpinner;
   const isDisabledProp = Boolean(disabled);
@@ -109,10 +106,10 @@ export function UIButton({
     const interactiveState = resolveState({ disabled: isDisabledProp, loading, pressed, state });
     const interactiveStateBg =
       interactiveState === 'pressed' || interactiveState === 'loading'
-        ? colors.primary.pressedBg
-        : colors.primary.defaultBg;
+        ? UiKitColors.primary.pressedBg
+        : UiKitColors.primary.defaultBg;
 
-    const backgroundColor = interactiveState === 'disabled' ? colors.primary.disabledBg : interactiveStateBg;
+    const backgroundColor = interactiveState === 'disabled' ? UiKitColors.primary.disabledBg : interactiveStateBg;
 
     return [
       styles.base,
@@ -137,10 +134,10 @@ export function UIButton({
 
         const textColor =
           interactiveState === 'pressed' || interactiveState === 'loading'
-            ? colors.primary.pressedText
+            ? UiKitColors.primary.pressedText
             : interactiveState === 'disabled'
-              ? colors.primary.disabledText
-              : colors.primary.text;
+              ? UiKitColors.primary.disabledText
+              : UiKitColors.primary.text;
 
         if (interactiveState === 'loading') {
           return (

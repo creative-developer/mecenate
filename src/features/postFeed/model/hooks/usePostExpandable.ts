@@ -8,13 +8,13 @@ export const usePostExpandable = (post: PostModel) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const { collapsedText, expandedText, canExpand } = useMemo(() => {
-    const collapsed = post.preview || post.body;
-    const expanded = post.body || post.preview;
+    const collapsed = (post.preview ?? post.body ?? '').trim();
+    const expanded = (post.body ?? post.preview ?? '').trim();
 
     return {
       collapsedText: collapsed,
       expandedText: expanded,
-      canExpand: (expanded?.length ?? 0) > COLLAPSE_THRESHOLD && expanded !== collapsed,
+      canExpand: expanded.length > COLLAPSE_THRESHOLD && expanded !== collapsed,
     };
   }, [post.body, post.preview]);
 

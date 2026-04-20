@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import type { PostModel } from '@entities/post';
 
-import { Typography } from '@shared/constants';
+import { Typography, UiKitColors } from '@shared/constants';
 import { UIButtonLink } from '@shared/ui/UIButtonLink';
 
 import { usePostExpandable } from '../../model/hooks/usePostExpandable';
@@ -39,7 +39,7 @@ export function PostExpandableBody({ post }: PostExpandableBodyProps) {
 const styles = StyleSheet.create({
   title: {
     ...Typography.display,
-    color: '#111416',
+    color: UiKitColors.feed.titleText,
   },
   textWrap: {
     position: 'relative',
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   text: {
     ...Typography.body,
-    color: '#111416',
+    color: UiKitColors.feed.bodyText,
     paddingRight: 126,
   },
   expandActionWrap: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   expandActionCover: {
     width: 20,
     height: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: UiKitColors.feed.cardBackground,
     opacity: 0.8,
   },
 });

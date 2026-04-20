@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { BorderRadius, Colors, Spacing, Typography } from '@shared/constants';
+import { BorderRadius, Spacing, Typography, UiKitColors } from '@shared/constants';
 import { RenderSharedIcon, type SharedIconRenderable } from '@shared/ui/RenderSharedIcon';
 import { UIButton } from '@shared/ui/UIButton';
 
@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
   root: {
     width: '100%',
     borderRadius: BorderRadius.sm,
-    backgroundColor: Colors.light.surface,
-    paddingHorizontal: Spacing.md + Spacing.sm,
+    paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.md,
     alignItems: 'center',
     gap: Spacing.md,
     minHeight: 292,
     justifyContent: 'center',
+    backgroundColor: UiKitColors.stateCard.background,
   },
   iconWrap: {
     width: ICON_SIZE,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   title: {
     ...Typography.display,
-    color: '#111416',
+    color: UiKitColors.stateCard.titleText,
     textAlign: 'center',
   },
 });

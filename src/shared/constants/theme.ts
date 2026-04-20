@@ -77,7 +77,7 @@ export const FigmaColorPalette = {
   },
 } as const;
 
-const lightUiKitColors = {
+export const UiKitColors = {
   primary: {
     defaultBg: FigmaColorPalette.brand.b500,
     pressedBg: FigmaColorPalette.brand.b600,
@@ -129,10 +129,28 @@ const lightUiKitColors = {
     activeLikeBgPressed: FigmaColorPalette.accent.p500,
     activeLikeBgDisabled: FigmaColorPalette.accent.p100,
     inactiveTextDefault: FigmaColorPalette.neutral.n600,
-    inactiveTextPressed: FigmaColorPalette.neutral.n700,
+    inactiveTextPressed: FigmaColorPalette.neutral.n600,
     inactiveTextDisabled: FigmaColorPalette.neutral.n400,
     activeLikeText: FigmaColorPalette.accent.p050,
     activeLikeTextDisabled: FigmaColorPalette.accent.p050,
+  },
+  feed: {
+    screenBackground: '#F5F8FD',
+    cardBackground: FigmaColorPalette.neutral.white,
+    titleText: FigmaColorPalette.neutral.n900,
+    bodyText: FigmaColorPalette.neutral.n900,
+    avatarFallbackBg: FigmaColorPalette.neutral.n100,
+    avatarFallbackText: FigmaColorPalette.neutral.n600,
+    coverFallback: FigmaColorPalette.neutral.n200,
+    paidOverlay: 'rgba(0, 0, 0, 0.5)',
+    paidOverlayIconBg: FigmaColorPalette.brand.b500,
+    paidOverlayText: FigmaColorPalette.neutral.white,
+    skeletonBase: 'rgba(238, 239, 241, 0.8)',
+    emptyCardBackground: FigmaColorPalette.neutral.white,
+  },
+  stateCard: {
+    background: FigmaColorPalette.neutral.white,
+    titleText: FigmaColorPalette.neutral.n900,
   },
   commentItem: {
     background: FigmaColorPalette.neutral.white,
@@ -141,42 +159,19 @@ const lightUiKitColors = {
   },
 } as const;
 
-export const UiKitColors = {
-  light: lightUiKitColors,
-  dark: lightUiKitColors,
-} as const;
-
-export type ThemeMode = keyof typeof UiKitColors;
-
 export const Colors = {
-  light: {
-    text: FigmaColorPalette.neutral.n900,
-    background: FigmaColorPalette.neutral.white,
-    tint: FigmaColorPalette.brand.b500,
-    icon: FigmaColorPalette.neutral.n600,
-    tabIconDefault: FigmaColorPalette.neutral.n600,
-    tabIconSelected: FigmaColorPalette.brand.b500,
-    exploreHeaderBackground: FigmaColorPalette.neutral.n050,
-    decorativeIcon: FigmaColorPalette.neutral.n400,
-    border: FigmaColorPalette.neutral.n075,
-    mutedText: FigmaColorPalette.neutral.n500,
-    surface: FigmaColorPalette.neutral.white,
-    like: FigmaColorPalette.accent.p300,
-  },
-  dark: {
-    text: FigmaColorPalette.neutral.white,
-    background: FigmaColorPalette.neutral.n900,
-    tint: FigmaColorPalette.brand.b100,
-    icon: FigmaColorPalette.neutral.n400,
-    tabIconDefault: FigmaColorPalette.neutral.n500,
-    tabIconSelected: FigmaColorPalette.brand.b100,
-    exploreHeaderBackground: FigmaColorPalette.neutral.n800,
-    decorativeIcon: FigmaColorPalette.neutral.n600,
-    border: FigmaColorPalette.neutral.n700,
-    mutedText: FigmaColorPalette.neutral.n300,
-    surface: FigmaColorPalette.neutral.n800,
-    like: FigmaColorPalette.accent.p200,
-  },
+  text: FigmaColorPalette.neutral.n900,
+  background: FigmaColorPalette.neutral.white,
+  tint: FigmaColorPalette.brand.b500,
+  icon: FigmaColorPalette.neutral.n600,
+  tabIconDefault: FigmaColorPalette.neutral.n600,
+  tabIconSelected: FigmaColorPalette.brand.b500,
+  exploreHeaderBackground: FigmaColorPalette.neutral.n050,
+  decorativeIcon: FigmaColorPalette.neutral.n400,
+  border: FigmaColorPalette.neutral.n075,
+  mutedText: FigmaColorPalette.neutral.n500,
+  surface: FigmaColorPalette.neutral.white,
+  like: FigmaColorPalette.accent.p300,
 } as const;
 
 export const Spacing = {

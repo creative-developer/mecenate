@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { PostsFeed } from '@features/postFeed';
+import { UiKitColors } from '@shared/constants';
 
 export function HomePage() {
   const insets = useSafeAreaInsets();
@@ -16,6 +17,6 @@ export function HomePage() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#F5F8FD',
+    backgroundColor: UiKitColors.feed.screenBackground,
   },
 });

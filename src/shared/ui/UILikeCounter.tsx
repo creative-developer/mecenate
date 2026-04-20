@@ -2,7 +2,6 @@ import { Pressable, StyleSheet, Text, View, type PressableProps } from 'react-na
 
 import { sharedIcons, type SharedIconComponent } from '@shared/assets';
 import { ControlSizes, Spacing, Typography, UiKitColors } from '@shared/constants';
-import { useColorScheme } from '@shared/hooks';
 import { RenderSharedIcon } from '@shared/ui/RenderSharedIcon';
 
 export type UILikeCounterState = 'default' | 'pressed' | 'disabled';
@@ -62,8 +61,6 @@ const resolveIcon = ({ active, state }: { active: boolean; state: UILikeCounterS
 };
 
 export function UILikeCounter({ count, active = false, disabled = false, onPress, state, ...pressableProps }: UILikeCounterProps) {
-  const theme = useColorScheme() ?? 'light';
-  const colors = UiKitColors[theme];
   const isDisabledProp = Boolean(disabled);
 
   const textStyles = (pressed: boolean) => {
@@ -71,10 +68,10 @@ export function UILikeCounter({ count, active = false, disabled = false, onPress
 
     const color =
       visualState === 'disabled'
-        ? colors.likeCounter.textDisabled
+        ? UiKitColors.likeCounter.textDisabled
         : visualState === 'pressed'
-          ? colors.likeCounter.textPressed
-          : colors.likeCounter.textDefault;
+          ? UiKitColors.likeCounter.textPressed
+          : UiKitColors.likeCounter.textDefault;
 
     return [styles.count, { color }];
   };

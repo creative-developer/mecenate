@@ -4,8 +4,7 @@ import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, View } from 'r
 import type { PostModel } from '@entities/post';
 
 import { sharedIcons } from '@shared/assets';
-import { FigmaColorPalette, Spacing, UiKitColors } from '@shared/constants';
-import { useColorScheme } from '@shared/hooks';
+import { Spacing, UiKitColors } from '@shared/constants';
 import { UIStateCard } from '@shared/ui/UIStateCard';
 
 import { useGetPostsFeed } from '../model/hooks/useGetPostsFeed';
@@ -14,15 +13,14 @@ import { PostLikeButton } from './PostActions/PostLikeButton';
 import { PostCard } from './PostCard/PostCard';
 import { PostCardSkeleton } from './PostCard/PostCardSkeleton';
 import { PostExpandableBody } from './PostCard/PostExpandableBody';
+import { PostPaidBodySkeleton } from './PostCard/PostPaidBodySkeleton';
 import { PostPaidOverlay } from './PostCard/PostPaidOverlay';
+import { PostFeedEmptyState } from './PostFeedEmptyState';
 
 const FEED_PAGE_SIZE = 10;
 const SKELETON_ITEMS_COUNT = 3;
 
 export function PostsFeed() {
-  const theme = useColorScheme() ?? 'light';
-  const colors = UiKitColors[theme];
-
   const listRef = useRef<FlatList<PostModel> | null>(null);
 
   const {
@@ -48,7 +46,7 @@ export function PostsFeed() {
     return (
       <PostCard
         post={item}
-        bodySlot={isPaid ? null : <PostExpandableBody post={item} />}
+        bodySlot={isPaid ? <PostPaidBodySkeleton /> : <PostExpandableBody post={item} />}
         overlaySlot={isPaid ? <PostPaidOverlay post={item} /> : null}
         actionsSlot={
           isPaid ? null : (
@@ -64,7 +62,7 @@ export function PostsFeed() {
 
   if (isInitialLoading) {
     return (
-      <View style={styles.contentContainer}>
+      <View style={styles.stateContainer}>
         {Array.from({ length: SKELETON_ITEMS_COUNT }).map((_, index) => (
           <PostCardSkeleton key={index} />
         ))}
@@ -74,7 +72,7 @@ export function PostsFeed() {
 
   if (isInitialError) {
     return (
-      <View style={styles.contentContainer}>
+      <View style={styles.stateContainer}>
         <UIStateCard
           icon={sharedIcons.feedErrorIllustration}
           title="Не удалось загрузить публикации"
@@ -87,13 +85,8 @@ export function PostsFeed() {
 
   if (isEmpty) {
     return (
-      <View style={styles.contentContainer}>
-        <UIStateCard
-          icon={sharedIcons.feedEmptyIllustration}
-          title="По вашему запросу ничего не найдено"
-          actionLabel="На главную"
-          onPress={onEmptyGoHome}
-        />
+      <View style={styles.emptyContainer}>
+        <PostFeedEmptyState onPressHome={onEmptyGoHome} />
       </View>
     );
   }
@@ -106,7 +99,7 @@ export function PostsFeed() {
       renderItem={renderItem}
       onEndReached={fetchNextPage}
       onEndReachedThreshold={0.25}
-      contentContainerStyle={styles.contentContainer}
+      contentContainerStyle={styles.listContentContainer}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       refreshControl={
         <RefreshControl
@@ -114,14 +107,14 @@ export function PostsFeed() {
           onRefresh={() => {
             void refresh();
           }}
-          tintColor={colors.primary.defaultBg}
-          colors={[colors.primary.defaultBg]}
+          tintColor={UiKitColors.primary.defaultBg}
+          colors={[UiKitColors.primary.defaultBg]}
         />
       }
       ListFooterComponent={
         isFetchingNextPage ? (
           <View style={styles.footerLoader}>
-            <ActivityIndicator size="small" color={FigmaColorPalette.brand.b500} />
+            <ActivityIndicator size="small" color={UiKitColors.primary.defaultBg} />
           </View>
         ) : null
       }
@@ -130,12 +123,21 @@ export function PostsFeed() {
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    paddingTop: Spacing.md,
-    paddingBottom: Spacing.xl,
+  stateContainer: {
+    paddingTop: Spacing.lg,
+    paddingBottom: Spacing.lg,
+    gap: Spacing.lg,
+  },
+  emptyContainer: {
+    flex: 1,
+    paddingTop: Spacing.lg,
+  },
+  listContentContainer: {
+    paddingTop: Spacing.lg,
+    paddingBottom: Spacing.lg,
   },
   separator: {
-    height: Spacing.md,
+    height: Spacing.lg,
   },
   footerLoader: {
     height: 48,

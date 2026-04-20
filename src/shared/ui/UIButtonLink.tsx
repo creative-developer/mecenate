@@ -1,7 +1,6 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
 
 import { Typography, UiKitColors } from '@shared/constants';
-import { useColorScheme } from '@shared/hooks';
 
 export type UIButtonLinkState = 'default' | 'pressed' | 'disabled';
 
@@ -37,18 +36,15 @@ const resolveState = ({
 };
 
 export function UIButtonLink({ label, onPress, disabled = false, state }: UIButtonLinkProps) {
-  const theme = useColorScheme() ?? 'light';
-  const colors = UiKitColors[theme];
-
   const textStyles = (pressed: boolean) => {
     const visualState = resolveState({ disabled, pressed, state });
 
     const color =
       visualState === 'disabled'
-        ? colors.link.disabledText
+        ? UiKitColors.link.disabledText
         : visualState === 'pressed'
-          ? colors.link.pressedText
-          : colors.link.defaultText;
+          ? UiKitColors.link.pressedText
+          : UiKitColors.link.defaultText;
 
     return [styles.text, { color }];
   };

@@ -1,28 +1,28 @@
-import { StyleSheet, View, type DimensionValue } from 'react-native';
+import { View, type DimensionValue } from 'react-native';
+
+import { UiKitColors } from '@shared/constants';
 
 export type UISkeletonProps = {
   width: DimensionValue;
   height: DimensionValue;
   radius?: number;
+  backgroundColor?: string;
 };
 
-export function UISkeleton({ width, height, radius = 22 }: UISkeletonProps) {
+export function UISkeleton({
+  width,
+  height,
+  radius = 22,
+  backgroundColor = UiKitColors.feed.skeletonBase,
+}: UISkeletonProps) {
   return (
     <View
-      style={[
-        styles.base,
-        {
-          width,
-          height,
-          borderRadius: radius,
-        },
-      ]}
+      style={{
+        width,
+        height,
+        borderRadius: radius,
+        backgroundColor,
+      }}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  base: {
-    backgroundColor: 'rgba(238, 239, 241, 0.8)',
-  },
-});

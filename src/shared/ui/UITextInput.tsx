@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 
 import { BorderRadius, ControlSizes, Typography, UiKitColors } from '@shared/constants';
-import { useColorScheme } from '@shared/hooks';
 
 export type UITextInputState = 'default' | 'pressed' | 'focused' | 'disabled';
 
@@ -63,8 +62,6 @@ export function UITextInput({
   onFocus,
   onBlur,
 }: UITextInputProps) {
-  const theme = useColorScheme() ?? 'light';
-  const colors = UiKitColors[theme];
   const [isFocused, setIsFocused] = useState(false);
 
   const filled = value.trim().length > 0;
@@ -74,19 +71,19 @@ export function UITextInput({
 
     const backgroundColor =
       visualState === 'disabled'
-        ? colors.input.disabledBg
+        ? UiKitColors.input.disabledBg
         : visualState === 'focused'
-          ? colors.input.focusedBg
+          ? UiKitColors.input.focusedBg
           : visualState === 'pressed'
-            ? colors.input.pressedBg
-            : colors.input.defaultBg;
+            ? UiKitColors.input.pressedBg
+            : UiKitColors.input.defaultBg;
 
     return [
       styles.root,
       {
         backgroundColor,
         borderWidth: visualState === 'focused' ? 2 : 0,
-        borderColor: visualState === 'focused' ? colors.input.focusedBorder : 'transparent',
+        borderColor: visualState === 'focused' ? UiKitColors.input.focusedBorder : 'transparent',
         paddingHorizontal: visualState === 'focused' ? ControlSizes.textInputHorizontalPadding - 2 : ControlSizes.textInputHorizontalPadding,
         paddingVertical: visualState === 'focused' ? ControlSizes.textInputVerticalPadding - 2 : ControlSizes.textInputVerticalPadding,
       },
@@ -97,12 +94,12 @@ export function UITextInput({
 
   const textColor =
     visualState === 'disabled'
-      ? colors.input.disabledText
+      ? UiKitColors.input.disabledText
       : filled
-        ? colors.input.text
+        ? UiKitColors.input.text
         : visualState === 'focused'
-          ? colors.input.focusedPlaceholder
-          : colors.input.placeholder;
+          ? UiKitColors.input.focusedPlaceholder
+          : UiKitColors.input.placeholder;
 
   return (
     <Pressable style={containerStyles} disabled={disabled} accessibilityState={{ disabled }}>
@@ -114,8 +111,8 @@ export function UITextInput({
         placeholderTextColor={textColor}
         style={[styles.input, { color: textColor }]}
         maxLength={maxLength}
-        cursorColor={colors.input.caret}
-        selectionColor={colors.input.caret}
+        cursorColor={UiKitColors.input.caret}
+        selectionColor={UiKitColors.input.caret}
         onFocus={event => {
           setIsFocused(true);
           onFocus?.(event);

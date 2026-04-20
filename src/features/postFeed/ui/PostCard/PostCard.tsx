@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 import type { PostModel } from '@entities/post';
-import { BorderRadius, Colors, Spacing, Typography } from '@shared/constants';
+import { BorderRadius, Spacing, Typography, UiKitColors } from '@shared/constants';
 
 export type PostCardProps = {
   post: PostModel;
@@ -57,11 +57,11 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     borderRadius: BorderRadius.sm,
-    backgroundColor: Colors.light.surface,
-    paddingHorizontal: Spacing.md + Spacing.sm,
+    paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.md,
     gap: Spacing.md,
     overflow: 'hidden',
+    backgroundColor: UiKitColors.feed.cardBackground,
   },
   avatarRow: {
     flexDirection: 'row',
@@ -86,16 +86,16 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#E6E9EF',
+    backgroundColor: UiKitColors.feed.avatarFallbackBg,
   },
   avatarFallbackText: {
     ...Typography.captionStrong,
-    color: '#57626F',
+    color: UiKitColors.feed.avatarFallbackText,
   },
   authorName: {
     ...Typography.heading,
-    color: '#111416',
     flex: 1,
+    color: UiKitColors.feed.titleText,
   },
   mediaSection: {
     gap: Spacing.sm,
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
   coverContainer: {
     position: 'relative',
     aspectRatio: 1,
-    marginHorizontal: -(Spacing.md + Spacing.sm),
-    backgroundColor: '#D4D4D4',
+    marginHorizontal: -Spacing.lg,
+    backgroundColor: UiKitColors.feed.coverFallback,
   },
   coverImage: {
     width: '100%',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   coverFallback: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#D4D4D4',
+    backgroundColor: UiKitColors.feed.coverFallback,
   },
   actionsRow: {
     flexDirection: 'row',

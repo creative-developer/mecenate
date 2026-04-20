@@ -1,11 +1,9 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
 
-import { Typography } from '@shared/constants';
-import { useThemeColor } from '@shared/hooks';
+import { Colors, Typography } from '@shared/constants';
 
 export type ThemedTextProps = TextProps & {
-  lightColor?: string;
-  darkColor?: string;
+  color?: string;
   type?:
     | 'default'
     | 'title'
@@ -18,19 +16,13 @@ export type ThemedTextProps = TextProps & {
     | 'buttonTall';
 };
 
-export function ThemedText({
-  style,
-  lightColor,
-  darkColor,
-  type = 'default',
-  ...rest
-}: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, type === 'link' ? 'tint' : 'text');
+export function ThemedText({ style, color, type = 'default', ...rest }: ThemedTextProps) {
+  const resolvedColor = color ?? (type === 'link' ? Colors.tint : Colors.text);
 
   return (
     <Text
       style={[
-        { color },
+        { color: resolvedColor },
         type === 'default' ? styles.default : undefined,
         type === 'title' ? styles.title : undefined,
         type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,

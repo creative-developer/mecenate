@@ -4,7 +4,7 @@ import {
   Manrope_600SemiBold,
   Manrope_700Bold,
 } from '@expo-google-fonts/manrope';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -13,8 +13,8 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { QueryProvider } from '@app/providers';
+
 import { setApiAuthTokenGetter } from '@shared/api';
-import { useColorScheme } from '@shared/hooks';
 
 const DEFAULT_APP_API_TOKEN = '550e8400-e29b-41d4-a716-446655440000';
 
@@ -31,7 +31,6 @@ export const unstable_settings = {
 };
 
 export function RootLayout() {
-  const colorScheme = useColorScheme();
   const [fontsLoaded, fontError] = useFonts({
     Manrope_400Regular,
     Manrope_500Medium,
@@ -51,7 +50,7 @@ export function RootLayout() {
 
   return (
     <QueryProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <ThemeProvider value={DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>

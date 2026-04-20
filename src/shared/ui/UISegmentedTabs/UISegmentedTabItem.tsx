@@ -1,7 +1,6 @@
 import { Pressable, StyleSheet, Text, type PressableStateCallbackType, type StyleProp, type ViewStyle } from 'react-native';
 
 import { BorderRadius, ControlSizes, Spacing, Typography, UiKitColors } from '@shared/constants';
-import { useColorScheme } from '@shared/hooks';
 
 export type UISegmentedTabItemState = 'default' | 'pressed' | 'disabled';
 
@@ -46,24 +45,21 @@ export function UISegmentedTabItem({
   state,
   style,
 }: UISegmentedTabItemProps) {
-  const theme = useColorScheme() ?? 'light';
-  const colors = UiKitColors[theme];
-
   const getContainerStyles = ({ pressed }: PressableStateCallbackType) => {
     const visualState = resolveState({ disabled, pressed, state });
 
     const backgroundColor =
       visualState === 'disabled'
         ? active
-          ? colors.segmentedTabs.activeDisabledBg
-          : colors.segmentedTabs.inactiveDisabledBg
+          ? UiKitColors.segmentedTabs.activeDisabledBg
+          : UiKitColors.segmentedTabs.inactiveDisabledBg
         : visualState === 'pressed'
           ? active
-            ? colors.segmentedTabs.activePressedBg
-            : colors.segmentedTabs.inactivePressedBg
+            ? UiKitColors.segmentedTabs.activePressedBg
+            : UiKitColors.segmentedTabs.inactivePressedBg
           : active
-            ? colors.segmentedTabs.activeBg
-            : colors.segmentedTabs.inactiveBg;
+            ? UiKitColors.segmentedTabs.activeBg
+            : UiKitColors.segmentedTabs.inactiveBg;
 
     return [
       styles.base,
@@ -79,10 +75,10 @@ export function UISegmentedTabItem({
     const visualState = resolveState({ disabled, pressed, state });
 
     const color = active
-      ? colors.segmentedTabs.activeText
+      ? UiKitColors.segmentedTabs.activeText
       : visualState === 'disabled'
-        ? colors.segmentedTabs.inactiveDisabledText
-        : colors.segmentedTabs.inactiveText;
+        ? UiKitColors.segmentedTabs.inactiveDisabledText
+        : UiKitColors.segmentedTabs.inactiveText;
 
     return [active ? styles.activeLabel : styles.label, { color }];
   };
