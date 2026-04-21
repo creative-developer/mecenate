@@ -5,10 +5,8 @@ import { appConfig } from '@shared/appConfig';
 import { registerApiInterceptors, resolveApiAuthToken } from './interceptors';
 import { getHeaders } from './utils';
 
-const baseURL = process.env.EXPO_PUBLIC_APP_API_URL || appConfig.api.baseUrl;
-
 const client = axios.create({
-  baseURL,
+  baseURL: appConfig.api.baseUrl,
   withCredentials: true,
   timeout: appConfig.api.requestTimeoutMs,
   headers: { ...getHeaders() },
