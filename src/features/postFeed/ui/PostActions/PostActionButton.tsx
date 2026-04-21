@@ -27,6 +27,12 @@ type VariantVisual = Record<
 
 const { actionButton } = UiKitColors;
 
+const VARIANT_ICON_SIZE: Record<Variant, number> = {
+  likeActive: ControlSizes.actionButtonLikeIcon,
+  likeInactive: ControlSizes.actionButtonLikeIcon,
+  comment: ControlSizes.actionButtonIcon,
+};
+
 const VARIANT_VISUALS: Record<Variant, VariantVisual> = {
   likeActive: {
     default: {
@@ -111,6 +117,8 @@ export function PostActionButton({
 
   const isDisabled = Boolean(disabled) || state === 'disabled' || !onPress;
 
+  const iconSize = VARIANT_ICON_SIZE[variant];
+
   const renderContent = ({ pressed }: PressableStateCallbackType) => {
     const pickedState = pickState(isDisabled, pressed, state);
     const current = visuals[pickedState];
@@ -118,11 +126,7 @@ export function PostActionButton({
     return (
       <View style={[styles.root, { backgroundColor: current.backgroundColor }]}>
         <View style={styles.iconBox}>
-          <RenderSharedIcon
-            icon={current.icon}
-            width={ControlSizes.actionButtonIcon}
-            height={ControlSizes.actionButtonIcon}
-          />
+          <RenderSharedIcon icon={current.icon} width={iconSize} height={iconSize} />
         </View>
         <Text style={[styles.count, { color: current.textColor }]}>{count}</Text>
       </View>

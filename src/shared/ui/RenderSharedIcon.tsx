@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View, type ImageSourcePropType } from 'react-native';
+import { Image, StyleProp, StyleSheet, View, ViewStyle, type ImageSourcePropType } from 'react-native';
 
 import type { SharedIconComponent } from '@shared/assets';
 
@@ -8,20 +8,21 @@ type RenderSharedIconProps = {
   icon: SharedIconRenderable;
   width: number;
   height: number;
+  style?: StyleProp<ViewStyle>;
 };
 
 const isSharedIconComponent = (icon: SharedIconRenderable): icon is SharedIconComponent => {
   return typeof icon === 'function';
 };
 
-export function RenderSharedIcon({ icon, width, height }: RenderSharedIconProps) {
+export function RenderSharedIcon({ icon, width, height, style }: RenderSharedIconProps) {
   if (!icon) {
-    return <View style={{ width, height }} />;
+    return <View style={[styles.image, { width, height }]} />;
   }
 
   if (isSharedIconComponent(icon)) {
     const IconComponent = icon;
-    return <IconComponent width={width} height={height} />;
+    return <IconComponent width={width} height={height} style={style} />;
   }
 
   return <Image source={icon} style={[styles.image, { width, height }]} resizeMode="contain" />;

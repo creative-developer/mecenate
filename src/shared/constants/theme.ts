@@ -211,6 +211,7 @@ export const ControlSizes = {
   actionButtonVerticalPadding: 6,
   actionButtonIconBox: 24,
   actionButtonIcon: 15,
+  actionButtonLikeIcon: 24,
   segmentedTabHeight: 38,
   textInputHeight: 40,
   textInputHorizontalPadding: 16,

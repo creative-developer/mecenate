@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { PostModel } from '@entities/post';
@@ -11,6 +12,9 @@ export type PostExpandableBodyProps = {
   post: PostModel;
 };
 
+const FADE_COLORS = ['rgba(255,255,255,0)', 'rgba(255,255,255,0.8)', '#FFFFFF'] as const;
+const FADE_LOCATIONS = [0, 0.5, 1] as const;
+
 export function PostExpandableBody({ post }: PostExpandableBodyProps) {
   const { isExpanded, canExpand, textToRender, expand } = usePostExpandable(post);
 
@@ -21,14 +25,26 @@ export function PostExpandableBody({ post }: PostExpandableBodyProps) {
       </Text>
 
       <View style={styles.textWrap}>
-        <Text style={styles.text} numberOfLines={isExpanded ? undefined : canExpand ? 2 : undefined}>
+        <Text
+          style={styles.text}
+          numberOfLines={isExpanded ? undefined : canExpand ? 2 : undefined}
+          ellipsizeMode="tail"
+        >
           {textToRender}
         </Text>
 
         {!isExpanded && canExpand ? (
           <View style={styles.expandActionWrap}>
-            <View style={styles.expandActionCover} />
-            <UIButtonLink label="Показать еще" onPress={expand} />
+            <LinearGradient
+              colors={FADE_COLORS}
+              locations={FADE_LOCATIONS}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.expandActionCover}
+            />
+            <View style={styles.expandActionLabel}>
+              <UIButtonLink label="Показать еще" onPress={expand} />
+            </View>
           </View>
         ) : null}
       </View>
@@ -49,7 +65,7 @@ const styles = StyleSheet.create({
   text: {
     ...Typography.body,
     color: UiKitColors.feed.bodyText,
-    paddingRight: 126,
+    width: '100%',
   },
   expandActionWrap: {
     position: 'absolute',
@@ -62,7 +78,10 @@ const styles = StyleSheet.create({
   expandActionCover: {
     width: 20,
     height: 20,
+  },
+  expandActionLabel: {
+    height: '100%',
+    justifyContent: 'center',
     backgroundColor: UiKitColors.feed.cardBackground,
-    opacity: 0.8,
   },
 });

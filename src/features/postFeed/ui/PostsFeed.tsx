@@ -100,7 +100,6 @@ export function PostsFeed() {
       onEndReached={fetchNextPage}
       onEndReachedThreshold={0.25}
       contentContainerStyle={styles.listContentContainer}
-      ItemSeparatorComponent={() => <View style={styles.separator} />}
       refreshControl={
         <RefreshControl
           refreshing={isPullRefreshing}
@@ -135,9 +134,10 @@ const styles = StyleSheet.create({
   listContentContainer: {
     paddingTop: Spacing.lg,
     paddingBottom: Spacing.lg,
+    gap: Spacing.lg,
   },
   separator: {
-    height: Spacing.lg,
+    // height: Spacing.lg,
   },
   footerLoader: {
     height: 48,

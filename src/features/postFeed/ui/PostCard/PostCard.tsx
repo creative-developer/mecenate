@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 import type { PostModel } from '@entities/post';
+
 import { BorderRadius, Spacing, Typography, UiKitColors } from '@shared/constants';
 
 export type PostCardProps = {
@@ -34,7 +35,7 @@ export function PostCard({ post, bodySlot, actionsSlot, overlaySlot }: PostCardP
         </Text>
       </View>
 
-      <View style={styles.mediaSection}>
+      <View style={styles.contentContainer}>
         <View style={styles.coverContainer}>
           {hasCover ? (
             <Image source={{ uri: post.coverUrl ?? undefined }} style={styles.coverImage} resizeMode="cover" />
@@ -45,10 +46,12 @@ export function PostCard({ post, bodySlot, actionsSlot, overlaySlot }: PostCardP
           {overlaySlot}
         </View>
 
-        {bodySlot}
-      </View>
+        <View style={styles.bottomRow}>
+          <View style={styles.bodyContainer}>{bodySlot}</View>
 
-      {actionsSlot ? <View style={styles.actionsRow}>{actionsSlot}</View> : null}
+          {actionsSlot ? <View style={styles.actionsRow}>{actionsSlot}</View> : null}
+        </View>
+      </View>
     </View>
   );
 }
@@ -57,9 +60,8 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     borderRadius: BorderRadius.sm,
-    paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.md,
-    gap: Spacing.md,
+    gap: Spacing.lg,
     overflow: 'hidden',
     backgroundColor: UiKitColors.feed.cardBackground,
   },
@@ -67,6 +69,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.md,
+    paddingHorizontal: Spacing.lg,
   },
   avatarWrap: {
     width: 40,
@@ -97,13 +100,19 @@ const styles = StyleSheet.create({
     flex: 1,
     color: UiKitColors.feed.titleText,
   },
-  mediaSection: {
+  contentContainer: {
+    gap: Spacing.sm,
+  },
+  bottomRow: {
+    gap: Spacing.lg,
+    paddingHorizontal: Spacing.lg,
+  },
+  bodyContainer: {
     gap: Spacing.sm,
   },
   coverContainer: {
     position: 'relative',
-    aspectRatio: 1,
-    marginHorizontal: -Spacing.lg,
+    height: 393,
     backgroundColor: UiKitColors.feed.coverFallback,
   },
   coverImage: {

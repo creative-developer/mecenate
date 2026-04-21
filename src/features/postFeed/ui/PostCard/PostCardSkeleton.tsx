@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.sm,
     paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.md,
-    gap: Spacing.md,
+    gap: Spacing.lg,
     overflow: 'hidden',
     backgroundColor: UiKitColors.feed.cardBackground,
   },
